@@ -1,0 +1,78 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+//下左右上
+//D L R U
+//左上角入口，右下角出口 ，1为阻碍
+public class 第五题__迷宫 {
+    static class Node{
+        int row;
+        int col;
+        public Node(int x,int y){
+            this.row=x;
+            this.col=y;
+        }
+    }
+
+    static char[][] arr=new char[30][50];//存放某个坐标的值
+    static int[][] book=new int[30][50];//标记这个坐标是否走过
+    static int[][] result=new int[30][50];//存入到达终点的路径长度
+    static String[][] rs=new String[30][50];//存入到达终点的方向
+
+    public static void bfs(int x,int y){
+        int[][] next={ //枚举四个方向
+                {0,1}, //右  R
+                {1,0}, //下  D
+                {0,-1},//左  L
+                {-1,0} //上  U
+        };
+        Queue<Node> queue=new LinkedList<>();
+        book[x][y]=1;
+        rs[0][0]="";
+        queue.add(new Node(x,y));
+        while (!queue.isEmpty()){//添加过了,所以不为空
+            Node node=queue.remove();
+            for(int i=0;i<4;i++){//枚举四个方向
+                int tx=node.row+next[i][0];
+                int ty=node.col+next[i][1];
+                if(tx<0||tx>30||ty<0||ty>50){
+                    continue;
+                }
+                if(arr[tx][ty]=='0'&&book[tx][ty]==0){//符合执行条件
+                    book[tx][ty]=1;
+                    result[tx][ty]=result[node.row][node.col]+1;
+                    rs[tx][ty]=rs[node.row][node.col]+i;
+                    queue.add(new Node(tx,ty));
+                }
+            }
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        for(int i=0;i<30;i++){
+            String str=sc.next();
+            for(int j=0;j<50;j++){
+                arr[i][j]=str.charAt(j);
+            }
+        }
+        bfs(0,0);
+        String st=rs[29][49];
+        for(int i=0;i<st.length();i++){
+            int c=st.charAt(i);
+            if(c=='0'){
+                System.out.println('R');
+            }else if(c=='1'){
+                System.out.println('D');
+            }else if(c=='2'){
+                System.out.println('L');
+            }else if(c=='3'){
+                System.out.println('U');
+            }
+        }
+        System.out.println();
+        System.out.println(result[29][49]);
+    }
+}
