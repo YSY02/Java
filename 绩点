@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+/**
+ * 北京大学对本科生的成绩施行平均学分绩点制（GPA）。
+ * 既将学生的实际考分根据不同的学科的不同学分按一定的公式进行计算。
+ *一门课程的学分绩点=该课绩点*该科学分
+ * 总评绩点=所有绩点之和/学分之和
+ * 输入：
+ 第一行 总的课程数n（n<10）；
+ 第二行 相应课程的学分（两个学分间用空格隔开）；
+ 第三行 对应课程的实际得分；
+ 此处输入的所有数字均为整数。
+
+ 样例输入：
+ 5
+ 4 3 4 2 3
+ 91 88 72 69 56
+ */
+public class ScorePoint {
+    //1.判断该课实际绩点
+    //2.求一门课程的学分绩点
+    //3.多门课程的学分绩点/学分之和
+    public static float real(int score){
+        while (score>=0&&score<=100){
+            if(score>=90&&score<=100){
+                return (float) 4.0;
+            }else if(score>=85&&score<=89){
+                return 3.7F;
+            }else if(score>=82&&score<=84){
+                return 3.3F;
+            }else if(score>=78&&score<=81){
+                return 3.0F;
+            }else if(score>=75&&score<=77){
+                return 2.7f;
+            }else if(score>=72&&score<=74){
+                return 2.3f;
+            }else if(score>=68&&score<=71){
+                return 2.0f;
+            }else if(score>=64&&score<=67){
+                return 1.5f;
+            }else if(score>=60&&score<=63){
+                return 1.0f;
+            }else {
+                return 0;
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner=new Scanner(System.in);
+        int n=scanner.nextInt();//课程数n
+        int[] a=new int[n];//存学分的数组
+        int[] b=new int[n];//存放对应成绩的数组
+        double GPAOfSum=0;//绩点之和
+        double sumOfGrade=0;//学分总和
+        double GPA=0;
+        //相应课程学分
+        for (int i=0;i<n;i++){
+            a[i]=scanner.nextInt();
+            sumOfGrade+=a[i];
+        }
+        //输相应课程成绩
+        for (int i=0;i<n;i++){
+            b[i]=scanner.nextInt();
+        }
+
+        for (int i=0;i<n;i++){
+            int score=b[i];
+            GPAOfSum+=real(score)*a[i];
+        }
+        GPA=GPAOfSum/sumOfGrade;//总评绩点
+        System.out.println(String .format("%.2f",GPA));
+    }
+}
