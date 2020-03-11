@@ -1,0 +1,48 @@
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.Set;
+
+/**
+ * 第一行：候选的人数
+ * 第二行：候选人名字
+ * 第三行：投票人的人数
+ * 第四行：输入投票
+ **/
+public class Candidate {
+    public static void main(String[] args) {
+        //控制台输入数据
+        Scanner scanner=new Scanner(System.in);
+        while (scanner.hasNext()){
+            //候选人人数
+            int n=scanner.nextInt();
+            String[] s=new String[n];
+            //记录候选人
+            HashMap<String,Integer> hashMap=new HashMap<>();
+            for (int i=0;i<n;i++){
+                String name=scanner.next();
+                hashMap.put(name,0);
+                s[i]=name;
+            }
+            //投票人数
+            int m=scanner.nextInt();
+            Set<String> key=hashMap.keySet();
+            int count=0;
+            for (int i=0;i<m;i++){
+                //投票
+                String ticket=scanner.next();
+                if(key.contains(ticket)){
+                    hashMap.put(ticket,hashMap.get(ticket)+1);
+                }
+                else {
+                    count++;
+                }
+            }
+            //输出结果
+            for (String k:s){
+                System.out.println(k+":"+hashMap.get(k));
+            }
+            System.out.println("Invalid:"+count);//无效票数
+        }
+        scanner.close();
+    }
+}
