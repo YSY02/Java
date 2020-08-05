@@ -1,0 +1,27 @@
+import java.util.Scanner;
+//有一棵无穷大的满二叉树，其结点按根结点一层一层地从左往右依次编号，
+// 根结点编号为1。现在有两个结点 a，b。请设计一个算法，
+// 求出a和b点的最近公共祖先的编号。 给定两个int a,b。为给定结点的编号。
+public class Tree {
+    //思路：让编号大的那个先走(往父结点走)，每走一步比较一下看谁大，谁大谁先走，走完比较看看二者的编号相不相同，
+    //不相同还是大的那个走，相同的话该结点就是最初两个节点的最近公共祖先。
+    public static int getLCA(int a, int b) {
+        // write code here
+        while (a!=b){
+            if(a>b){
+                a=a/2;
+            }else {
+                b=b/2;
+            }
+        }
+        return a;
+    }
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while (sc.hasNext()){
+            int a=sc.nextInt();
+            int b=sc.nextInt();
+            System.out.println(getLCA(a,b));
+        }
+    }
+}
