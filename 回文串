@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+/**
+ * 给定一个字符串，问是否能通过添加一个字母将其变为回文串。
+ * 输入描述：一行一个由小写字母构成的字符串，字符串长度小于等于10
+ *
+ * 思路：如果长度为n的字符串添加一个字符能成为回文串，
+ * 那么删除一个字符也能成为回文，因为这个两个字符是对称的位置。
+ * 如果删除的是中间位置字符的话，那么原字符串本身必为回文；
+ * 如果删除的是两端字符的话，那么长度为n-1的两个子串必有一个也是回文
+ */
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while (sc.hasNext()){
+            String s=sc.nextLine();
+            //去掉两端或者本身是否是回文
+            if(isPalindrome(s.substring(0,s.length()-1))||isPalindrome(s.substring(1,s.length()))||isPalindrome(s)){
+                System.out.println("YES");
+            }else {
+                System.out.println("No");
+            }
+        }
+    }
+
+    public static boolean isPalindrome(String s) {
+        return new StringBuilder(s).reverse().toString().equals(s);
+    }
+}
