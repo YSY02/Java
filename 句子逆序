@@ -20,6 +20,7 @@ public class reverseSentence {
     }
 
     public static void reverse(char[] arr,int start,int end){
+        //否则就跟没逆序一样
         while (start<end) {
             char tmp = arr[start];
             arr[start] = arr[end];
@@ -51,6 +52,7 @@ public class reverseSentence {
                 //第一个单词逆置完成，i向下一个单词移动
                 i=++j;
             }else {
+                //该单词没遍历到空格，j++，直到遇到空格
                 ++j;
             }
         }
