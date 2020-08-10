@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+/**
+ * 题目：
+ * 将一个英文语句以单词为单位逆序排放。
+ * 输入I am a boy
+ * 输出boy a am I
+ *
+ * 思路：先反转整体，在反转部分
+ * 判断是否为单词可以通过空格判断，
+ * 最后一个单词用长度判断，不用空格
+ */
+public class reverseSentence {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while (sc.hasNext()){
+            String str=sc.nextLine();
+            System.out.println(reverseSentence(str));
+        }
+    }
+
+    public static void reverse(char[] arr,int start,int end){
+        while (start<end) {
+            char tmp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = tmp;
+            start++;
+            end--;
+        }
+    }
+
+    public static String reverseSentence(String str){
+        if (str==null){
+            return null;
+        }
+        char[] array=str.toCharArray();
+        //先对整体逆置
+        reverse(array,0,array.length-1);
+        int i=0;
+        int j=0;
+        //开始部分逆置
+        while (i<array.length){
+            //都是空格 ，进行++跳过
+            if(array[i]==' '){
+                i++;
+                j++;
+            }else if(j==array.length||array[j]==' '){//顺序不能反，否则会空指针异常，
+                //否则，如果只有一个单词 ，先判断空格，会导致空指针异常
+                //逆置每个单词，--j，j本身会发生移动
+                reverse(array,i,--j);
+                //第一个单词逆置完成，i向下一个单词移动
+                i=++j;
+            }else {
+                ++j;
+            }
+        }
+        return String.copyValueOf(array);
+    }
+}
