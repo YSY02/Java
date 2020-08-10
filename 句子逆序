@@ -20,7 +20,7 @@ public class reverseSentence {
     }
 
     public static void reverse(char[] arr,int start,int end){
-        //否则就跟没逆序一样
+        //必须判断，否则就跟没逆序一样
         while (start<end) {
             char tmp = arr[start];
             arr[start] = arr[end];
