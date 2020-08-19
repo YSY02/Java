@@ -1,30 +1,44 @@
-// 借助字符串当成一个表, 完成字母和数字之间的转换即可. 注意处理大小写的情况. 
-import java.util.*; 
-public class Main4{ 
-    public static void main(String[] args){ 
-        // symbol 和 number 对应下标的字符是有对应关系的. 
-        String symbol="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; 
-        String number="222333444555666777788899991234567890"; 
-        Scanner scanner=new Scanner(System.in); 
-        while(scanner.hasNext()){ 
-            int n=scanner.nextInt(); 
-            ArrayList<String> arrayList=new ArrayList<String>(); 
-            for(int i=0;i<n;i++){ 
-                String str=scanner.next(); 
-                str=str.replace("-",""); 
-                String result=""; 
-                for(int j=0;j<7;j++){ 
+/**
+ * 例如公司的Help Desk号码是4357，因为4对应H、3对应E、5对应L、7对应P，因此4357 就是HELP。
+ * 同理，TUT-GLOP就代表888-4567、310-GINO代表310-4466。
+ * NowCoder刚进入外企，并不习惯这样的命名方式，现在给你一串电话号码列表，请你帮他转换成数字形式 的号码，并去除重复的部分。
+ *
+ * 输入描述： 输入包含多组数据。 每组数据第一行包含一个正整数n（1≤n≤1024）。
+ *            紧接着n行，每行包含一个电话号码，电话号码仅由连字符“-”、数字和大写字母组成。
+ *            没有连续出现的连字符，并且排除连字符后长度始终为7（美国电话号码只有7位）。
+ * 输出描述： 对应每一组输入，按照字典顺序输出不重复的标准数字形式电话号码，
+ *            即“xxx-xxxx”形式。 每个电话号码占一行，每组数据之后输出一个空行作为间隔符。
+ */
+// 借助字符串当成一个表, 完成字母和数字之间的转换即可. 注意处理大小写的情况.
+// 分析：借助 hash 表完成字母和数字之间的转换即可. 注意大小写的情况
+// 解题思路：1. 先用hash表存储字母和数字之间的映射关系
+//           2. 每次读到一个字符, 去hash表中查找, 并进行处理即可
+import java.util.*;
+public class Main4{
+    public static void main(String[] args){
+        // symbol 和 number 对应下标的字符是有对应关系的.
+        String symbol="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        String number="222333444555666777788899991234567890";
+        Scanner scanner=new Scanner(System.in);
+        while(scanner.hasNext()){
+            int n=scanner.nextInt();
+            ArrayList<String> arrayList=new ArrayList<String>();
+            for(int i=0;i<n;i++){
+                String str=scanner.next();
+                str=str.replace("-","");
+                String result="";
+                for(int j=0;j<7;j++){
                     result+=number.charAt(symbol.indexOf(str.charAt(j)+""));
                 }
-                result=result.substring(0,3)+"-"+result.substring(3,7); 
+                result=result.substring(0,3)+"-"+result.substring(3,7);
                 if(!arrayList.contains(result))
-                    arrayList.add(result); 
+                    arrayList.add(result);
             }
-            Collections.sort(arrayList); 
-            for(int j=0;j<arrayList.size();j++){ 
-                System.out.println(arrayList.get(j)); 
+            Collections.sort(arrayList);
+            for(int j=0;j<arrayList.size();j++){
+                System.out.println(arrayList.get(j));
             }
-            System.out.println(); 
+            System.out.println();
         }
     }
 }
