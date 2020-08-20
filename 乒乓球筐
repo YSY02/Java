@@ -1,0 +1,77 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+/**
+ * 题目：
+ * r有两盒（A、B）乒乓球，有红双喜的、有亚力亚的……现在他需要判别A盒是否包含了B盒中所有的种类，
+ * 并且每种球的数量不少于B盒中的数量，该怎么办呢？
+ *
+ * 输入描述:
+ * 输入有多组数据。
+ * 每组数据包含两个字符串A、B，代表A盒与B盒中的乒乓球，每个乒乓球用一个大写字母表示，即相同类型的乒乓球为相同的大写字母。
+ * 字符串长度不大于10000。
+
+ * 输出描述:
+ * 每一组输入对应一行输出：如果B盒中所有球的类型在A中都有，并且每种球的数量都不大于A，则输出“Yes”；否则输出“No”。
+ * 【基本思路】：
+ * 借助 哈希表 保存每个盒子中的每种球的类别和数目.
+ * 然后遍历其中的一个 map 和另外一个 map,进行对比即可
+ *
+ *  * 输入
+ *  * ABCDFYE CDE
+ *  * ABCDGEAS CDECDE
+ *  *
+ *  * 输出
+ *  * Yes
+ *  * No
+ */
+public class Main5 {
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        while (sc.hasNext()){
+            String boxA=sc.next();
+            String boxB=sc.next();
+            //创建2个哈希表，key为球的种类，value为球的数量
+            HashMap<String,Integer> hashMapBoxA=new HashMap<String,Integer>();
+            HashMap<String,Integer> hashMapBoxB=new HashMap<>();
+            //初始化boxA
+            for (int i=0;i<boxA.length();i++){
+                //如果包含，数值value+1
+                if(hashMapBoxA.containsKey(boxA.charAt(i)+"")){
+                    //put(K key,V value),设置key对应的value
+                    //get(K key,V value),返回key对应的value
+                    hashMapBoxA.put(boxA.charAt(i)+"",hashMapBoxA.get(boxA.charAt(i)+"")+1);
+                }else {
+                    hashMapBoxA.put(boxA.charAt(i)+"",1);
+                }
+            }
+
+            //初始化boxB
+            for(int i=0;i<boxB.length();i++){
+                if(hashMapBoxB.containsKey(boxB.charAt(i)+"")){
+                    hashMapBoxB.put(boxB.charAt(i)+"",hashMapBoxB.get(boxB.charAt(i)+"")+1);
+                }else{
+                    hashMapBoxB.put(boxB.charAt(i)+"",1);
+                }
+            }
+
+            //遍历boxB，与boxA中的元素进行对比，flag表示是否满足包含关系
+            int flag=0;
+            for(String key:hashMapBoxB.keySet()){//返回所有key的不重复集合
+                if(!hashMapBoxA.containsKey(key)){
+                    flag=1;
+                    break;
+                }else {
+                    if(hashMapBoxA.get(key)<hashMapBoxB.get(key)){//返回key对应的值
+                        flag=1;
+                        break;
+                    }
+                }
+            }
+            if(flag==1)//B中的数量>=A或者A中不包含B中所有种类
+                System.out.println("No");
+            else
+                System.out.println("Yes");
+        }
+    }
+}
