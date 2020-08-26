@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MaxInteger {
+    //最大整数--贪心算法
+    /*
+    【题目要求】：
+    设有n个正整数，将它们连接成一排，组成一个最大的多位整数。
+    例如：n=3时，3个整数13，312，343，连成的最大整数为34331213。
+    又如：n=4时，4个整数7，13，4，246，连成的最大整数为7424613。
+    输入：n
+    N个数
+    输出：连成的多位数
+    【解题思路】：
+    贪心策略是：先把整数转换成字符串，然后在比较a+b和b+a，如果a+b>=b+a，就把a排在b的前面，反之则把a排在b的后面。
+     */
+    public static void main(String[] args) {
+        String str = "";
+        ArrayList<String> arrayList = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入正整数个数：");
+        int n = scanner.nextInt();
+        System.out.println("请输入数据：");
+        while (scanner.hasNext()) {
+            while (n > 0) {
+                arrayList.add(scanner.next());
+            }
+            for (int i = 0; i < arrayList.size(); i++) {
+                for (int j = i + 1; j < arrayList.size(); i++) {
+                    if ((arrayList.get(i) + arrayList.get(j)).compareTo(arrayList.get(j) + arrayList.get(i)) < 0) {
+                        String temp = arrayList.get(i);
+                        arrayList.set(i, arrayList.get(j));
+                        arrayList.set(j, arrayList.get(i));
+                    }
+                }
+
+                for (int a = 0; a < arrayList.size(); a++) {
+                    str += arrayList.get(i);
+                }
+                System.out.println("str=" + str);
+            }
+        }
+    }
+}
